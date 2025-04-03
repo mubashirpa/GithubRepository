@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.evaluation.githubrepository" />
+                  <option name="mobileSdkAppId" value="1:666260176874:android:6a3fa2260f65ae8e9b7c93" />
+                  <option name="projectId" value="github-repo-eval" />
+                  <option name="projectNumber" value="666260176874" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
