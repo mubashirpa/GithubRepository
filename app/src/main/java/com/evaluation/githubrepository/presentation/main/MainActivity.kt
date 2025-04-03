@@ -1,4 +1,4 @@
-package com.evaluation.githubrepository
+package com.evaluation.githubrepository.presentation.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -7,11 +7,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.evaluation.githubrepository.ui.theme.GithubRepositoryTheme
+import androidx.navigation.compose.rememberNavController
+import com.evaluation.githubrepository.navigation.GithubRepositoryNavHost
+import com.evaluation.githubrepository.presentation.theme.GithubRepositoryTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,31 +19,15 @@ class MainActivity : ComponentActivity() {
         setContent {
             GithubRepositoryTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding),
+                    GithubRepositoryNavHost(
+                        navController = rememberNavController(),
+                        modifier =
+                            Modifier
+                                .fillMaxSize()
+                                .padding(innerPadding),
                     )
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(
-    name: String,
-    modifier: Modifier = Modifier,
-) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier,
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun GreetingPreview() {
-    GithubRepositoryTheme {
-        Greeting("Android")
     }
 }
