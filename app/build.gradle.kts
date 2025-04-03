@@ -64,4 +64,6 @@ dependencies {
     implementation(libs.bundles.credentials)
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth)
+    implementation(platform(libs.koin.bom))
+    implementation(libs.bundles.koin)
 }
