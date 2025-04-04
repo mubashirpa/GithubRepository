@@ -3,6 +3,8 @@ package com.evaluation.githubrepository.domain.repository
 import com.evaluation.githubrepository.domain.model.UserInfo
 
 interface AuthenticationRepository {
+    val isUserLoggedIn: Boolean
+
     suspend fun signInWithGoogle(
         token: String,
         nonce: String,

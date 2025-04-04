@@ -9,6 +9,9 @@ import kotlinx.coroutines.tasks.await
 class AuthenticationRepositoryImpl(
     private val firebaseAuth: FirebaseAuth,
 ) : AuthenticationRepository {
+    override val isUserLoggedIn: Boolean
+        get() = firebaseAuth.currentUser != null
+
     override suspend fun signInWithGoogle(
         token: String,
         nonce: String,
