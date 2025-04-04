@@ -2,11 +2,13 @@ package com.evaluation.githubrepository.presentation.home.components
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.text.input.clearText
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material3.ExpandedFullScreenSearchBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -29,7 +31,10 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeSearchBar(scrollBehavior: SearchBarScrollBehavior) {
+fun HomeSearchBar(
+    scrollBehavior: SearchBarScrollBehavior,
+    onFilterClick: () -> Unit,
+) {
     val textFieldState = rememberTextFieldState()
     val searchBarState = rememberSearchBarState()
     val scope = rememberCoroutineScope()
@@ -44,7 +49,11 @@ fun HomeSearchBar(scrollBehavior: SearchBarScrollBehavior) {
                     scope.launch { searchBarState.animateToCollapsed() }
                 },
                 placeholder = {
-                    Text(text = stringResource(R.string.search))
+                    if (searchBarState.currentValue == SearchBarValue.Expanded) {
+                        Text(text = stringResource(R.string.search))
+                    } else {
+                        Text(text = stringResource(R.string.app_name))
+                    }
                 },
                 leadingIcon = {
                     if (searchBarState.currentValue == SearchBarValue.Expanded) {
@@ -66,10 +75,27 @@ fun HomeSearchBar(scrollBehavior: SearchBarScrollBehavior) {
                     }
                 },
                 trailingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.MoreVert,
-                        contentDescription = null,
-                    )
+                    if (searchBarState.currentValue == SearchBarValue.Expanded) {
+                        if (textFieldState.text.isNotEmpty()) {
+                            IconButton(
+                                onClick = {
+                                    textFieldState.clearText()
+                                },
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Clear,
+                                    contentDescription = null,
+                                )
+                            }
+                        }
+                    } else {
+                        IconButton(onClick = onFilterClick) {
+                            Icon(
+                                imageVector = Icons.Default.Tune,
+                                contentDescription = null,
+                            )
+                        }
+                    }
                 },
             )
         }
