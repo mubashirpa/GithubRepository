@@ -33,7 +33,7 @@ class MainActivity : ComponentActivity() {
                         LoadingScreen(modifier = Modifier.padding(innerPadding))
                     } else {
                         val startDestination =
-                            if (viewModel.uiState.isUserLoggedIn) Screen.Home else Screen.Home
+                            if (viewModel.uiState.isUserLoggedIn) Screen.Home else Screen.Login
                         GithubRepositoryNavHost(
                             navController = rememberNavController(),
                             modifier =
