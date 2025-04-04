@@ -36,6 +36,8 @@ fun HomeScreen(
         topBar = {
             HomeSearchBar(
                 scrollBehavior = scrollBehavior,
+                uiState = uiState,
+                onEvent = onEvent,
                 onFilterClick = { /*TODO*/ },
             )
         },
