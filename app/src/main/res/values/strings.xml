@@ -2,6 +2,8 @@
     <string name="app_name">Github Repository</string>
     <string name="google">Google</string>
     <string name="sign_in_with_google">Sign in with Google</string>
+    <string name="github_repository">Github\nRepository</string>
+    <string name="signing_in">Signing in</string>
 
     <!-- Errors -->
     <string name="error_unexpected">An unexpected error occurred.</string>
