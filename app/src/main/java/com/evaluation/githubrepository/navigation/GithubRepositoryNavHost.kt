@@ -6,7 +6,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.evaluation.githubrepository.presentation.home.HomeScreen
+import com.evaluation.githubrepository.presentation.home.HomeViewModel
 import com.evaluation.githubrepository.presentation.login.LoginScreen
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun GithubRepositoryNavHost(
@@ -29,7 +31,8 @@ fun GithubRepositoryNavHost(
             )
         }
         composable<Screen.Home> {
-            HomeScreen()
+            val viewModel: HomeViewModel = koinViewModel()
+            HomeScreen(uiState = viewModel.uiState)
         }
     }
 }
