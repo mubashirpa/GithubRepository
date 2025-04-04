@@ -13,7 +13,7 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.appendPathSegments
 import io.ktor.http.headers
 
-class GitHubRepositoryImpl(
+class GithubRepositoryImpl(
     private val httpClient: HttpClient,
 ) : GitHubRepository {
     override suspend fun getRepositories(

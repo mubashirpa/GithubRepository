@@ -1,7 +1,7 @@
 package com.evaluation.githubrepository.di
 
 import com.evaluation.githubrepository.data.repository.AuthenticationRepositoryImpl
-import com.evaluation.githubrepository.data.repository.GitHubRepositoryImpl
+import com.evaluation.githubrepository.data.repository.GithubRepositoryImpl
 import com.evaluation.githubrepository.domain.repository.AuthenticationRepository
 import com.evaluation.githubrepository.domain.repository.GitHubRepository
 import com.evaluation.githubrepository.domain.usecase.GetRepositoriesUseCase
@@ -25,7 +25,7 @@ val appModule =
     module {
         single { Firebase.auth }
         singleOf(::AuthenticationRepositoryImpl) { bind<AuthenticationRepository>() }
-        singleOf(::GitHubRepositoryImpl) { bind<GitHubRepository>() }
+        singleOf(::GithubRepositoryImpl) { bind<GitHubRepository>() }
         single { LoginWithGoogleUseCase(get()) }
         single { GetRepositoriesUseCase(get()) }
         singleOf(::IsUserLoggedInUseCase)
