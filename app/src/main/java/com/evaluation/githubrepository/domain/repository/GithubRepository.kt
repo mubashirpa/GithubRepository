@@ -2,6 +2,7 @@ package com.evaluation.githubrepository.domain.repository
 
 import androidx.annotation.IntRange
 import com.evaluation.githubrepository.data.remote.dto.github.repos.RepoDto
+import com.evaluation.githubrepository.data.remote.dto.github.search.SearchRepoDto
 
 interface GitHubRepository {
     suspend fun getRepositories(
@@ -13,6 +14,15 @@ interface GitHubRepository {
         @IntRange(from = 1, to = 100) perPage: Int = 30,
         page: Int = 1,
     ): List<RepoDto>
+
+    suspend fun searchRepositories(
+        token: String,
+        query: String,
+        sort: SearchSort? = null,
+        order: SearchOrder = SearchOrder.DESC,
+        @IntRange(from = 1, to = 100) perPage: Int = 30,
+        page: Int = 1,
+    ): SearchRepoDto
 }
 
 enum class RepoType {
@@ -29,6 +39,18 @@ enum class RepoSort {
 }
 
 enum class RepoDirection {
+    ASC,
+    DESC,
+}
+
+enum class SearchSort {
+    STARS,
+    FORKS,
+    HELP_WANTED_ISSUES,
+    UPDATED,
+}
+
+enum class SearchOrder {
     ASC,
     DESC,
 }
