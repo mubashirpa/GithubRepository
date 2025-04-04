@@ -4,6 +4,7 @@ import com.evaluation.githubrepository.data.repository.AuthenticationRepositoryI
 import com.evaluation.githubrepository.data.repository.GitHubRepositoryImpl
 import com.evaluation.githubrepository.domain.repository.AuthenticationRepository
 import com.evaluation.githubrepository.domain.repository.GitHubRepository
+import com.evaluation.githubrepository.domain.usecase.GetRepositoriesUseCase
 import com.evaluation.githubrepository.domain.usecase.IsUserLoggedInUseCase
 import com.evaluation.githubrepository.domain.usecase.LoginWithGoogleUseCase
 import com.evaluation.githubrepository.presentation.login.LoginViewModel
@@ -25,6 +26,7 @@ val appModule =
         singleOf(::AuthenticationRepositoryImpl) { bind<AuthenticationRepository>() }
         singleOf(::GitHubRepositoryImpl) { bind<GitHubRepository>() }
         single { LoginWithGoogleUseCase(get()) }
+        single { GetRepositoriesUseCase(get()) }
         singleOf(::IsUserLoggedInUseCase)
         viewModelOf(::LoginViewModel)
         viewModelOf(::MainViewModel)
