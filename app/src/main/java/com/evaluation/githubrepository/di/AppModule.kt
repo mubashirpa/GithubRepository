@@ -7,6 +7,7 @@ import com.evaluation.githubrepository.domain.repository.GitHubRepository
 import com.evaluation.githubrepository.domain.usecase.GetRepositoriesUseCase
 import com.evaluation.githubrepository.domain.usecase.IsUserLoggedInUseCase
 import com.evaluation.githubrepository.domain.usecase.LoginWithGoogleUseCase
+import com.evaluation.githubrepository.presentation.home.HomeViewModel
 import com.evaluation.githubrepository.presentation.login.LoginViewModel
 import com.evaluation.githubrepository.presentation.main.MainViewModel
 import com.google.firebase.auth.ktx.auth
@@ -30,6 +31,7 @@ val appModule =
         singleOf(::IsUserLoggedInUseCase)
         viewModelOf(::LoginViewModel)
         viewModelOf(::MainViewModel)
+        viewModelOf(::HomeViewModel)
         single {
             HttpClient {
                 expectSuccess = true
