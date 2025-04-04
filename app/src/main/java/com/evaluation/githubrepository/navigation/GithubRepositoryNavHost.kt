@@ -32,7 +32,10 @@ fun GithubRepositoryNavHost(
         }
         composable<Screen.Home> {
             val viewModel: HomeViewModel = koinViewModel()
-            HomeScreen(uiState = viewModel.uiState)
+            HomeScreen(
+                uiState = viewModel.uiState,
+                onEvent = viewModel::onEvent,
+            )
         }
     }
 }
