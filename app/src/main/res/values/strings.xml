@@ -7,6 +7,10 @@
     <string name="search">Search</string>
     <string name="back">Back</string>
     <string name="retry">Retry</string>
+    <string name="sign_out">Sign out</string>
+
+    <!-- Screen titles -->
+    <string name="title_settings_screen">Settings</string>
 
     <!-- Errors -->
     <string name="error_connect">A network error (such as timeout, interrupted connection or unreachable host) has occurred.</string>
