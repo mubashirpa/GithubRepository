@@ -7,6 +7,7 @@ import com.evaluation.githubrepository.domain.repository.GitHubRepository
 import com.evaluation.githubrepository.domain.usecase.GetRepositoriesUseCase
 import com.evaluation.githubrepository.domain.usecase.IsUserLoggedInUseCase
 import com.evaluation.githubrepository.domain.usecase.LoginWithGoogleUseCase
+import com.evaluation.githubrepository.domain.usecase.SearchRepositoriesUseCase
 import com.evaluation.githubrepository.presentation.home.HomeViewModel
 import com.evaluation.githubrepository.presentation.login.LoginViewModel
 import com.evaluation.githubrepository.presentation.main.MainViewModel
@@ -28,6 +29,7 @@ val appModule =
         singleOf(::GithubRepositoryImpl) { bind<GitHubRepository>() }
         single { LoginWithGoogleUseCase(get()) }
         single { GetRepositoriesUseCase(get()) }
+        single { SearchRepositoriesUseCase(get()) }
         singleOf(::IsUserLoggedInUseCase)
         viewModelOf(::LoginViewModel)
         viewModelOf(::MainViewModel)
