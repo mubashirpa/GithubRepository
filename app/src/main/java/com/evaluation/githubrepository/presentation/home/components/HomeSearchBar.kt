@@ -38,7 +38,7 @@ fun HomeSearchBar(
     scrollBehavior: SearchBarScrollBehavior,
     uiState: HomeUiState,
     onEvent: (HomeUiEvent) -> Unit,
-    onFilterClick: () -> Unit,
+    onNavigateToSettings: () -> Unit,
 ) {
     val searchBarState = rememberSearchBarState()
     val scope = rememberCoroutineScope()
@@ -95,7 +95,7 @@ fun HomeSearchBar(
                             }
                         }
                     } else {
-                        IconButton(onClick = onFilterClick) {
+                        IconButton(onClick = onNavigateToSettings) {
                             Icon(
                                 imageVector = Icons.Default.Tune,
                                 contentDescription = null,

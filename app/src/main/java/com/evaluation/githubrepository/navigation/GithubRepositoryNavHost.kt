@@ -37,6 +37,9 @@ fun GithubRepositoryNavHost(
             HomeScreen(
                 uiState = viewModel.uiState,
                 onEvent = viewModel::onEvent,
+                onNavigateToSettings = {
+                    navController.navigate(Screen.Settings)
+                },
             )
         }
         composable<Screen.Settings> {

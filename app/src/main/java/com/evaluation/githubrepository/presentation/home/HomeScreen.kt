@@ -27,6 +27,7 @@ import com.evaluation.githubrepository.presentation.home.components.RepoListItem
 fun HomeScreen(
     uiState: HomeUiState,
     onEvent: (HomeUiEvent) -> Unit,
+    onNavigateToSettings: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val scrollBehavior = SearchBarDefaults.enterAlwaysSearchBarScrollBehavior()
@@ -38,7 +39,7 @@ fun HomeScreen(
                 scrollBehavior = scrollBehavior,
                 uiState = uiState,
                 onEvent = onEvent,
-                onFilterClick = { /*TODO*/ },
+                onNavigateToSettings = onNavigateToSettings,
             )
         },
     ) { innerPadding ->
