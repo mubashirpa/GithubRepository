@@ -1,6 +1,6 @@
 package com.evaluation.githubrepository.domain.repository
 
-import com.evaluation.githubrepository.domain.model.UserInfo
+import com.evaluation.githubrepository.domain.model.auth.UserInfo
 
 interface AuthenticationRepository {
     val isUserLoggedIn: Boolean

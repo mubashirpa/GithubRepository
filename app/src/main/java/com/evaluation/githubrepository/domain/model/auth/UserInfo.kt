@@ -1,4 +1,4 @@
-package com.evaluation.githubrepository.domain.model
+package com.evaluation.githubrepository.domain.model.auth
 
 data class UserInfo(
     val email: String? = null,

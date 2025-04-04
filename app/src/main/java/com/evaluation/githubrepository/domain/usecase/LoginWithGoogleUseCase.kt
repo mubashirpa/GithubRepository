@@ -3,7 +3,7 @@ package com.evaluation.githubrepository.domain.usecase
 import com.evaluation.githubrepository.R
 import com.evaluation.githubrepository.core.Result
 import com.evaluation.githubrepository.core.UiText
-import com.evaluation.githubrepository.domain.model.UserInfo
+import com.evaluation.githubrepository.domain.model.auth.UserInfo
 import com.evaluation.githubrepository.domain.repository.AuthenticationRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

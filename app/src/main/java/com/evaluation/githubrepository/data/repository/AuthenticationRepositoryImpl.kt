@@ -1,6 +1,6 @@
 package com.evaluation.githubrepository.data.repository
 
-import com.evaluation.githubrepository.domain.model.UserInfo
+import com.evaluation.githubrepository.domain.model.auth.UserInfo
 import com.evaluation.githubrepository.domain.repository.AuthenticationRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
