@@ -13,4 +13,6 @@
     <string name="error_auth_google_credential_exception">Received an invalid credential response.</string>
     <string name="error_auth_google_invalid_id_token">Received an invalid Google id token response.</string>
     <string name="error_auth_google_unexpected_credential">Unexpected type of credential.</string>
+    <string name="search">Search</string>
+    <string name="back">Back</string>
 </resources>
