@@ -5,6 +5,7 @@ import com.evaluation.githubrepository.domain.repository.AuthenticationRepositor
 import com.evaluation.githubrepository.domain.usecase.IsUserLoggedInUseCase
 import com.evaluation.githubrepository.domain.usecase.LoginWithGoogleUseCase
 import com.evaluation.githubrepository.presentation.login.LoginViewModel
+import com.evaluation.githubrepository.presentation.main.MainViewModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import org.koin.core.module.dsl.bind
@@ -19,4 +20,5 @@ val appModule =
         single { LoginWithGoogleUseCase(get()) }
         singleOf(::IsUserLoggedInUseCase)
         viewModelOf(::LoginViewModel)
+        viewModelOf(::MainViewModel)
     }
