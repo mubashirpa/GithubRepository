@@ -11,4 +11,9 @@ sealed class Screen {
 
     @Serializable
     data object Settings : Screen()
+
+    @Serializable
+    data class Repo(
+        val id: Int,
+    ) : Screen()
 }

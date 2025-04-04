@@ -28,6 +28,7 @@ fun HomeScreen(
     uiState: HomeUiState,
     onEvent: (HomeUiEvent) -> Unit,
     onNavigateToSettings: () -> Unit,
+    onNavigateToRepo: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val scrollBehavior = SearchBarDefaults.enterAlwaysSearchBarScrollBehavior()
@@ -40,6 +41,7 @@ fun HomeScreen(
                 uiState = uiState,
                 onEvent = onEvent,
                 onNavigateToSettings = onNavigateToSettings,
+                onNavigateToRepo = onNavigateToRepo,
             )
         },
     ) { innerPadding ->
@@ -83,7 +85,9 @@ fun HomeScreen(
                         key = { repo -> repo.id!! },
                     ) { repo ->
                         RepoListItem(
-                            onClick = {},
+                            onClick = {
+                                repo.id?.let(onNavigateToRepo)
+                            },
                             title = repo.name.orEmpty(),
                             description = repo.description.orEmpty(),
                             starCount = repo.stargazersCount ?: 0,

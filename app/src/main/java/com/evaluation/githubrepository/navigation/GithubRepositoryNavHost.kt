@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import com.evaluation.githubrepository.presentation.home.HomeScreen
 import com.evaluation.githubrepository.presentation.home.HomeViewModel
 import com.evaluation.githubrepository.presentation.login.LoginScreen
+import com.evaluation.githubrepository.presentation.repo.RepoScreen
 import com.evaluation.githubrepository.presentation.settings.SettingsScreen
 import com.evaluation.githubrepository.presentation.settings.SettingsViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -40,6 +41,9 @@ fun GithubRepositoryNavHost(
                 onNavigateToSettings = {
                     navController.navigate(Screen.Settings)
                 },
+                onNavigateToRepo = { id ->
+                    navController.navigate(Screen.Repo(id))
+                },
             )
         }
         composable<Screen.Settings> {
@@ -53,6 +57,9 @@ fun GithubRepositoryNavHost(
                     }
                 },
             )
+        }
+        composable<Screen.Repo> {
+            RepoScreen()
         }
     }
 }

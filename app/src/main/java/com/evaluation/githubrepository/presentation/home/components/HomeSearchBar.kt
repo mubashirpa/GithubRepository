@@ -39,6 +39,7 @@ fun HomeSearchBar(
     uiState: HomeUiState,
     onEvent: (HomeUiEvent) -> Unit,
     onNavigateToSettings: () -> Unit,
+    onNavigateToRepo: (Int) -> Unit,
 ) {
     val searchBarState = rememberSearchBarState()
     val scope = rememberCoroutineScope()
@@ -138,12 +139,18 @@ fun HomeSearchBar(
                     items(
                         items = repositories,
                         key = { it.id!! },
-                    ) {
+                    ) { repo ->
                         SearchListItem(
-                            onClick = { /*TODO*/ },
-                            title = it.name.orEmpty(),
-                            description = it.description.orEmpty(),
-                            starCount = it.stargazersCount ?: 0,
+                            onClick = {
+                                scope
+                                    .launch { searchBarState.animateToCollapsed() }
+                                    .invokeOnCompletion {
+                                        repo.id?.let(onNavigateToRepo)
+                                    }
+                            },
+                            title = repo.name.orEmpty(),
+                            description = repo.description.orEmpty(),
+                            starCount = repo.stargazersCount ?: 0,
                             modifier = Modifier.animateItem(),
                         )
                     }
