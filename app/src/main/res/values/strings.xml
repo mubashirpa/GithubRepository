@@ -1,7 +1,14 @@
 <resources>
     <string name="app_name">Github Repository</string>
+    <string name="google">Google</string>
+    <string name="sign_in_with_google">Sign in with Google</string>
 
     <!-- Errors -->
     <string name="error_unexpected">An unexpected error occurred.</string>
     <string name="error_unknown">Something wrong happened. Please try again.</string>
+
+    <!-- Google authentication errors -->
+    <string name="error_auth_google_credential_exception">Received an invalid credential response.</string>
+    <string name="error_auth_google_invalid_id_token">Received an invalid Google id token response.</string>
+    <string name="error_auth_google_unexpected_credential">Unexpected type of credential.</string>
 </resources>
