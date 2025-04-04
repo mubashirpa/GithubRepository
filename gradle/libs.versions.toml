@@ -17,6 +17,7 @@ firebaseBom = "33.12.0"
 googleServices = "4.4.2"
 koinBom = "4.0.4"
 coreSplashscreen = "1.2.0-beta01"
+ktor = "3.1.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -45,6 +46,10 @@ koin-bom = { group = "io.insert-koin", name = "koin-bom", version.ref = "koinBom
 koin-androidx-compose = { group = "io.insert-koin", name = "koin-androidx-compose" }
 koin-androidx-compose-navigation = { group = "io.insert-koin", name = "koin-androidx-compose-navigation" }
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "coreSplashscreen" }
+ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
+ktor-client-android = { group = "io.ktor", name = "ktor-client-android", version.ref = "ktor" }
+ktor-client-content-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-serialization-kotlinx-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -62,4 +67,10 @@ credentials = [
 koin = [
     "koin-androidx-compose",
     "koin-androidx-compose-navigation",
+]
+ktor = [
+    "ktor-client-core",
+    "ktor-client-android",
+    "ktor-client-content-negotiation",
+    "ktor-serialization-kotlinx-json",
 ]

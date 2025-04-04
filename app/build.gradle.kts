@@ -68,4 +68,5 @@ dependencies {
     implementation(platform(libs.koin.bom))
     implementation(libs.bundles.koin)
     implementation(libs.androidx.core.splashscreen)
+    implementation(libs.bundles.ktor)
 }
