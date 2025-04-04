@@ -8,6 +8,8 @@ import androidx.navigation.compose.composable
 import com.evaluation.githubrepository.presentation.home.HomeScreen
 import com.evaluation.githubrepository.presentation.home.HomeViewModel
 import com.evaluation.githubrepository.presentation.login.LoginScreen
+import com.evaluation.githubrepository.presentation.settings.SettingsScreen
+import com.evaluation.githubrepository.presentation.settings.SettingsViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -35,6 +37,18 @@ fun GithubRepositoryNavHost(
             HomeScreen(
                 uiState = viewModel.uiState,
                 onEvent = viewModel::onEvent,
+            )
+        }
+        composable<Screen.Settings> {
+            val viewModel: SettingsViewModel = koinViewModel()
+            SettingsScreen(
+                onEvent = viewModel::onEvent,
+                onNavigateUp = navController::navigateUp,
+                onSignOutComplete = {
+                    navController.navigate(Screen.Login) {
+                        popUpTo(Screen.Home) { inclusive = true }
+                    }
+                },
             )
         }
     }
