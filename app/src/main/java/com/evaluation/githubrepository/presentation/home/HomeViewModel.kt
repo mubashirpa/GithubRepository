@@ -19,6 +19,14 @@ class HomeViewModel(
         getRepositories()
     }
 
+    fun onEvent(event: HomeUiEvent) {
+        when (event) {
+            HomeUiEvent.Retry -> {
+                getRepositories()
+            }
+        }
+    }
+
     private fun getRepositories() {
         getRepositoriesUseCase("google")
             .onEach { result ->
