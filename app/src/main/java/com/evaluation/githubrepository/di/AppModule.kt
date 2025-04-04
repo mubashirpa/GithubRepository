@@ -2,6 +2,7 @@ package com.evaluation.githubrepository.di
 
 import com.evaluation.githubrepository.data.repository.AuthenticationRepositoryImpl
 import com.evaluation.githubrepository.domain.repository.AuthenticationRepository
+import com.evaluation.githubrepository.domain.usecase.IsUserLoggedInUseCase
 import com.evaluation.githubrepository.domain.usecase.LoginWithGoogleUseCase
 import com.evaluation.githubrepository.presentation.login.LoginViewModel
 import com.google.firebase.auth.ktx.auth
@@ -16,5 +17,6 @@ val appModule =
         single { Firebase.auth }
         singleOf(::AuthenticationRepositoryImpl) { bind<AuthenticationRepository>() }
         single { LoginWithGoogleUseCase(get()) }
+        singleOf(::IsUserLoggedInUseCase)
         viewModelOf(::LoginViewModel)
     }
