@@ -4,6 +4,9 @@
     <string name="sign_in_with_google">Sign in with Google</string>
     <string name="github_repository">Github\nRepository</string>
     <string name="signing_in">Signing in</string>
+    <string name="search">Search</string>
+    <string name="back">Back</string>
+    <string name="retry">Retry</string>
 
     <!-- Errors -->
     <string name="error_connect">A network error (such as timeout, interrupted connection or unreachable host) has occurred.</string>
@@ -14,6 +17,4 @@
     <string name="error_auth_google_credential_exception">Received an invalid credential response.</string>
     <string name="error_auth_google_invalid_id_token">Received an invalid Google id token response.</string>
     <string name="error_auth_google_unexpected_credential">Unexpected type of credential.</string>
-    <string name="search">Search</string>
-    <string name="back">Back</string>
 </resources>
