@@ -36,13 +36,13 @@ class GetRepositoriesUseCase(
                 val repositories =
                     repository
                         .getRepositories(
-                            token,
-                            username,
-                            type,
-                            sort,
-                            direction,
-                            perPage,
-                            page,
+                            token = token,
+                            username = username,
+                            type = type,
+                            sort = sort,
+                            direction = direction,
+                            perPage = perPage,
+                            page = page,
                         ).map { it.toRepo() }
                 emit(Result.Success(repositories))
             } catch (_: ConnectException) {
