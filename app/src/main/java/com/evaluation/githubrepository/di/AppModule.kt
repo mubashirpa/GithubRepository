@@ -8,6 +8,7 @@ import com.evaluation.githubrepository.domain.usecase.GetRepositoriesUseCase
 import com.evaluation.githubrepository.domain.usecase.IsUserLoggedInUseCase
 import com.evaluation.githubrepository.domain.usecase.LoginWithGoogleUseCase
 import com.evaluation.githubrepository.domain.usecase.SearchRepositoriesUseCase
+import com.evaluation.githubrepository.domain.usecase.SignOutUseCase
 import com.evaluation.githubrepository.presentation.home.HomeViewModel
 import com.evaluation.githubrepository.presentation.login.LoginViewModel
 import com.evaluation.githubrepository.presentation.main.MainViewModel
@@ -31,6 +32,7 @@ val appModule =
         single { GetRepositoriesUseCase(get()) }
         single { SearchRepositoriesUseCase(get()) }
         singleOf(::IsUserLoggedInUseCase)
+        singleOf(::SignOutUseCase)
         viewModelOf(::LoginViewModel)
         viewModelOf(::MainViewModel)
         viewModelOf(::HomeViewModel)
