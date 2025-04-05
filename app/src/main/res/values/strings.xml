@@ -8,6 +8,9 @@
     <string name="back">Back</string>
     <string name="retry">Retry</string>
     <string name="sign_out">Sign out</string>
+    <string name="description">Description</string>
+    <string name="no_description_provided">No description provided</string>
+    <string name="unknown">Unknown</string>
 
     <!-- Screen titles -->
     <string name="title_settings_screen">Settings</string>

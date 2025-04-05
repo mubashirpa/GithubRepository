@@ -5,10 +5,12 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
 import com.evaluation.githubrepository.presentation.home.HomeScreen
 import com.evaluation.githubrepository.presentation.home.HomeViewModel
 import com.evaluation.githubrepository.presentation.login.LoginScreen
 import com.evaluation.githubrepository.presentation.repo.RepoScreen
+import com.evaluation.githubrepository.presentation.repo.RepoViewModel
 import com.evaluation.githubrepository.presentation.settings.SettingsScreen
 import com.evaluation.githubrepository.presentation.settings.SettingsViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -58,8 +60,16 @@ fun GithubRepositoryNavHost(
                 },
             )
         }
-        composable<Screen.Repo> {
-            RepoScreen()
+        composable<Screen.Repo> { backStackEntry ->
+            val repo = backStackEntry.toRoute<Screen.Repo>()
+            val viewModel: RepoViewModel = koinViewModel()
+
+            RepoScreen(
+                uiState = viewModel.uiState,
+                title = repo.repo,
+                subtitle = repo.owner,
+                onNavigateUp = navController::navigateUp,
+            )
         }
     }
 }
