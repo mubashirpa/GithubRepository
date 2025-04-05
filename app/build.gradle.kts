@@ -4,6 +4,8 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.google.services)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.room)
 }
 
 android {
@@ -39,6 +41,9 @@ android {
     buildFeatures {
         compose = true
     }
+    room {
+        schemaDirectory("$projectDir/schemas")
+    }
 }
 
 dependencies {
@@ -69,4 +74,7 @@ dependencies {
     implementation(libs.bundles.koin)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.bundles.ktor)
+    implementation(libs.bundles.room)
+    ksp(libs.room.compiler)
+    implementation(libs.bundles.paging)
 }
