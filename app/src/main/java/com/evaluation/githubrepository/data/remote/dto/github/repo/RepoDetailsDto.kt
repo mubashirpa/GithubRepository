@@ -98,6 +98,7 @@ data class RepoDetailsDto(
     val keysUrl: String? = null,
     @SerialName("labels_url")
     val labelsUrl: String? = null,
+    val language: String? = null,
     @SerialName("languages_url")
     val languagesUrl: String? = null,
     val license: License? = null,

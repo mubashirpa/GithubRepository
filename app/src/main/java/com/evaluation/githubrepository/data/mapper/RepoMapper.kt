@@ -12,6 +12,7 @@ fun RepoDto.toRepo(): Repo =
     Repo(
         description = description,
         id = id,
+        language = language,
         name = name,
         owner = owner?.login,
         stargazersCount = stargazersCount,
@@ -21,6 +22,7 @@ fun RepoDto.toRepoEntity(): ReposEntity =
     ReposEntity(
         id = id!!,
         description = description,
+        language = language,
         name = name,
         owner = owner?.login,
         stargazersCount = stargazersCount,
@@ -30,6 +32,7 @@ fun ReposEntity.toRepo(): Repo =
     Repo(
         description = description,
         id = id,
+        language = language,
         name = name,
         owner = owner,
         stargazersCount = stargazersCount,
@@ -41,6 +44,7 @@ fun SearchRepoDto.toSearchRepo(): List<SearchRepo> =
             SearchRepo(
                 description = repo.description,
                 id = repo.id,
+                language = repo.language,
                 name = repo.name,
                 owner = repo.owner?.login,
                 stargazersCount = repo.stargazersCount,
@@ -51,6 +55,7 @@ fun RepoDetailsDto.toRepoDetails(): RepoDetails =
     RepoDetails(
         description = description,
         id = id,
+        language = language,
         name = name,
         owner = owner?.login,
         stargazersCount = stargazersCount,
@@ -60,6 +65,7 @@ fun ReposEntity.toRepoDetails(): RepoDetails =
     RepoDetails(
         description = description,
         id = id,
+        language = language,
         name = name,
         owner = owner,
         stargazersCount = stargazersCount,
