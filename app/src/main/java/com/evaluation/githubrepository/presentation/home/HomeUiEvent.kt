@@ -6,9 +6,5 @@ sealed class HomeUiEvent {
         val delay: Long = 0,
     ) : HomeUiEvent()
 
-    data object Refresh : HomeUiEvent()
-
-    data object Retry : HomeUiEvent()
-
     data object UserMessageShown : HomeUiEvent()
 }

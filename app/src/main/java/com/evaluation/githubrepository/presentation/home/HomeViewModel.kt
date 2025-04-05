@@ -6,41 +6,34 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import com.evaluation.githubrepository.core.Result
-import com.evaluation.githubrepository.domain.usecase.GetRepositoriesUseCase
+import com.evaluation.githubrepository.domain.usecase.GetRepositoriesPagingUseCase
 import com.evaluation.githubrepository.domain.usecase.SearchRepositoriesUseCase
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    private val getRepositoriesUseCase: GetRepositoriesUseCase,
+    private val getRepositoriesPagingUseCase: GetRepositoriesPagingUseCase,
     private val searchRepositoriesUseCase: SearchRepositoriesUseCase,
 ) : ViewModel() {
     var uiState by mutableStateOf(HomeUiState())
         private set
 
     private var searchJob: Job? = null
-    private var repoJob: Job? = null
 
     init {
-        getRepositories(false)
+        getRepositories()
         collectSearchQuery()
     }
 
     fun onEvent(event: HomeUiEvent) {
         when (event) {
-            HomeUiEvent.Refresh -> {
-                getRepositories(true)
-            }
-
-            HomeUiEvent.Retry -> {
-                getRepositories(false)
-            }
-
             is HomeUiEvent.Search -> {
                 searchRepositories(event.query.trim(), event.delay)
             }
@@ -51,49 +44,15 @@ class HomeViewModel(
         }
     }
 
-    private fun getRepositories(isRefreshing: Boolean) {
-        // Cancel any ongoing repoJob before making a new call.
-        repoJob?.cancel()
-        repoJob =
-            getRepositoriesUseCase("google")
-                .onEach { result ->
-                    when (result) {
-                        is Result.Empty -> {}
-
-                        is Result.Error -> {
-                            // The Result.Error state is only used during initial loading and retry attempts.
-                            // Otherwise, a snackbar is displayed using the userMessage property.
-                            uiState =
-                                if (isRefreshing) {
-                                    uiState.copy(
-                                        isRefreshing = false,
-                                        userMessage = result.message,
-                                    )
-                                } else {
-                                    uiState.copy(repositoriesResult = result)
-                                }
-                        }
-
-                        is Result.Loading -> {
-                            // The Result.Loading state is only used during initial loading and retry attempts.
-                            // In other cases, the PullRefreshIndicator is shown with isRefreshing = true.
-                            uiState =
-                                if (isRefreshing) {
-                                    uiState.copy(isRefreshing = true)
-                                } else {
-                                    uiState.copy(repositoriesResult = result)
-                                }
-                        }
-
-                        is Result.Success -> {
-                            uiState =
-                                uiState.copy(
-                                    repositoriesResult = result,
-                                    isRefreshing = false,
-                                )
-                        }
-                    }
-                }.launchIn(viewModelScope)
+    private fun getRepositories() {
+        viewModelScope.launch {
+            getRepositoriesPagingUseCase("mubashirpa")
+                .distinctUntilChanged()
+                .cachedIn(viewModelScope)
+                .collect {
+                    uiState.repositories.value = it
+                }
+        }
     }
 
     private fun searchRepositories(

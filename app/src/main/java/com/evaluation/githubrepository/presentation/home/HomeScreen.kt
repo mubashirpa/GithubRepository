@@ -5,9 +5,9 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBarDefaults
@@ -16,8 +16,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.evaluation.githubrepository.core.Result
+import androidx.paging.LoadState
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemContentType
+import androidx.paging.compose.itemKey
+import com.evaluation.githubrepository.R
 import com.evaluation.githubrepository.presentation.components.ErrorScreen
 import com.evaluation.githubrepository.presentation.components.LoadingScreen
 import com.evaluation.githubrepository.presentation.home.components.HomeSearchBar
@@ -46,28 +51,28 @@ fun HomeScreen(
             )
         },
     ) { innerPadding ->
-        when (val repositoriesResult = uiState.repositoriesResult) {
-            is Result.Empty -> {}
+        val lazyPagingItems = uiState.repositories.collectAsLazyPagingItems()
 
-            is Result.Error -> {
+        when (lazyPagingItems.loadState.refresh) {
+            is LoadState.Error -> {
+                val message = stringResource(R.string.error_unknown)
                 ErrorScreen(
                     onRetryClick = {
-                        onEvent(HomeUiEvent.Retry)
+                        lazyPagingItems.refresh()
                     },
                     modifier =
                         Modifier
                             .fillMaxSize()
                             .padding(innerPadding),
-                    errorMessage = repositoriesResult.message!!.asString(),
+                    errorMessage = message,
                 )
             }
 
-            is Result.Loading -> {
+            LoadState.Loading -> {
                 LoadingScreen(modifier = Modifier.padding(innerPadding))
             }
 
-            is Result.Success -> {
-                val repositories = repositoriesResult.data!!
+            is LoadState.NotLoading -> {
                 val layoutDirection = LocalLayoutDirection.current
                 val contentPadding =
                     PaddingValues(
@@ -80,7 +85,7 @@ fun HomeScreen(
                 PullToRefreshBox(
                     isRefreshing = uiState.isRefreshing,
                     onRefresh = {
-                        onEvent(HomeUiEvent.Refresh)
+                        lazyPagingItems.refresh()
                     },
                     modifier = Modifier.padding(top = innerPadding.calculateTopPadding()),
                 ) {
@@ -89,18 +94,44 @@ fun HomeScreen(
                         verticalArrangement = Arrangement.spacedBy(10.dp),
                     ) {
                         items(
-                            items = repositories,
-                            key = { repo -> repo.id!! },
-                        ) { repo ->
-                            RepoListItem(
-                                onClick = {
-                                    repo.id?.let(onNavigateToRepo)
-                                },
-                                title = repo.name.orEmpty(),
-                                description = repo.description.orEmpty(),
-                                starCount = repo.stargazersCount ?: 0,
-                                modifier = Modifier.animateItem(),
-                            )
+                            count = lazyPagingItems.itemCount,
+                            key = lazyPagingItems.itemKey(),
+                            contentType = lazyPagingItems.itemContentType(),
+                        ) { index ->
+                            lazyPagingItems[index]?.let { repo ->
+                                RepoListItem(
+                                    onClick = {
+                                        repo.id?.let(onNavigateToRepo)
+                                    },
+                                    title = repo.name.orEmpty(),
+                                    description = repo.description.orEmpty(),
+                                    starCount = repo.stargazersCount ?: 0,
+                                    modifier = Modifier.animateItem(),
+                                )
+                            }
+                        }
+
+                        when (lazyPagingItems.loadState.append) {
+                            is LoadState.Error -> {
+                                item {
+                                    val message = stringResource(R.string.error_unknown)
+                                    ErrorScreen(
+                                        onRetryClick = {
+                                            lazyPagingItems.retry()
+                                        },
+                                        modifier = Modifier.fillMaxWidth(),
+                                        errorMessage = message,
+                                    )
+                                }
+                            }
+
+                            LoadState.Loading -> {
+                                item {
+                                    LoadingScreen()
+                                }
+                            }
+
+                            is LoadState.NotLoading -> {}
                         }
                     }
                 }
