@@ -8,5 +8,6 @@ data class ReposEntity(
     @PrimaryKey val id: Int,
     val description: String? = null,
     val name: String? = null,
+    val owner: String? = null,
     val stargazersCount: Int? = null,
 )

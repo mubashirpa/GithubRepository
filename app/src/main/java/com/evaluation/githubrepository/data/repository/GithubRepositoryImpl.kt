@@ -113,6 +113,11 @@ class GithubRepositoryImpl(
             }.body()
 
     override suspend fun getRepository(
+        owner: String,
+        repo: String,
+    ): ReposEntity? = database.reposDao().getRepo(owner, repo)
+
+    override suspend fun getRepository(
         token: String,
         owner: String,
         repo: String,

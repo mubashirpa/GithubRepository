@@ -39,6 +39,11 @@ interface GitHubRepository {
     ): SearchRepoDto
 
     suspend fun getRepository(
+        owner: String,
+        repo: String,
+    ): ReposEntity?
+
+    suspend fun getRepository(
         token: String,
         owner: String,
         repo: String,
