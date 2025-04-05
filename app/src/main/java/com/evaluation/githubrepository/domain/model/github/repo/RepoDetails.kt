@@ -1,6 +1,6 @@
-package com.evaluation.githubrepository.domain.model.github.repos
+package com.evaluation.githubrepository.domain.model.github.repo
 
-data class Repo(
+data class RepoDetails(
     val description: String? = null,
     val id: Int? = null,
     val name: String? = null,
