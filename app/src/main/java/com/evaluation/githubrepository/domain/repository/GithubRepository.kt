@@ -3,6 +3,7 @@ package com.evaluation.githubrepository.domain.repository
 import androidx.annotation.IntRange
 import androidx.paging.PagingData
 import com.evaluation.githubrepository.data.local.entity.ReposEntity
+import com.evaluation.githubrepository.data.remote.dto.github.repo.RepoDetailsDto
 import com.evaluation.githubrepository.data.remote.dto.github.repos.RepoDto
 import com.evaluation.githubrepository.data.remote.dto.github.search.SearchRepoDto
 import kotlinx.coroutines.flow.Flow
@@ -36,6 +37,12 @@ interface GitHubRepository {
         @IntRange(from = 1, to = 100) perPage: Int = 30,
         page: Int = 1,
     ): SearchRepoDto
+
+    suspend fun getRepository(
+        token: String,
+        owner: String,
+        repo: String,
+    ): RepoDetailsDto?
 }
 
 enum class RepoType {

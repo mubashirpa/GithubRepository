@@ -7,6 +7,7 @@ import androidx.paging.PagingData
 import com.evaluation.githubrepository.core.Constants
 import com.evaluation.githubrepository.data.local.database.GithubDatabase
 import com.evaluation.githubrepository.data.local.entity.ReposEntity
+import com.evaluation.githubrepository.data.remote.dto.github.repo.RepoDetailsDto
 import com.evaluation.githubrepository.data.remote.dto.github.repos.RepoDto
 import com.evaluation.githubrepository.data.remote.dto.github.search.SearchRepoDto
 import com.evaluation.githubrepository.data.remote.paging.RepoRemoteMediator
@@ -103,6 +104,23 @@ class GithubRepositoryImpl(
                         append("per_page", perPage.toString())
                         append("page", page.toString())
                     }
+                }
+                headers {
+                    append(HttpHeaders.Accept, "application/vnd.github+json")
+                    append(HttpHeaders.Authorization, "Bearer $token")
+                    append("X-GitHub-Api-Version", "2022-11-28")
+                }
+            }.body()
+
+    override suspend fun getRepository(
+        token: String,
+        owner: String,
+        repo: String,
+    ): RepoDetailsDto? =
+        httpClient
+            .get(Constants.GITHUB_API_BASE_URL) {
+                url {
+                    appendPathSegments("repos", owner, repo)
                 }
                 headers {
                     append(HttpHeaders.Accept, "application/vnd.github+json")
