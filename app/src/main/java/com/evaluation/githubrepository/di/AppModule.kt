@@ -16,6 +16,7 @@ import com.evaluation.githubrepository.domain.usecase.SignOutUseCase
 import com.evaluation.githubrepository.presentation.home.HomeViewModel
 import com.evaluation.githubrepository.presentation.login.LoginViewModel
 import com.evaluation.githubrepository.presentation.main.MainViewModel
+import com.evaluation.githubrepository.presentation.repo.RepoViewModel
 import com.evaluation.githubrepository.presentation.settings.SettingsViewModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -45,6 +46,7 @@ val appModule =
         viewModelOf(::MainViewModel)
         viewModelOf(::HomeViewModel)
         viewModelOf(::SettingsViewModel)
+        viewModelOf(::RepoViewModel)
         single {
             HttpClient {
                 expectSuccess = true
