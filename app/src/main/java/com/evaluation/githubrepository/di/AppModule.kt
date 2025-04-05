@@ -8,6 +8,7 @@ import com.evaluation.githubrepository.domain.repository.AuthenticationRepositor
 import com.evaluation.githubrepository.domain.repository.GitHubRepository
 import com.evaluation.githubrepository.domain.usecase.GetRepositoriesPagingUseCase
 import com.evaluation.githubrepository.domain.usecase.GetRepositoriesUseCase
+import com.evaluation.githubrepository.domain.usecase.GetRepositoryUseCase
 import com.evaluation.githubrepository.domain.usecase.IsUserLoggedInUseCase
 import com.evaluation.githubrepository.domain.usecase.LoginWithGoogleUseCase
 import com.evaluation.githubrepository.domain.usecase.SearchRepositoriesUseCase
@@ -37,6 +38,7 @@ val appModule =
         single { GetRepositoriesUseCase(get()) }
         single { SearchRepositoriesUseCase(get()) }
         single { GetRepositoriesPagingUseCase(get()) }
+        single { GetRepositoryUseCase(get()) }
         singleOf(::IsUserLoggedInUseCase)
         singleOf(::SignOutUseCase)
         viewModelOf(::LoginViewModel)
