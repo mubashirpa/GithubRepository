@@ -41,8 +41,8 @@ fun GithubRepositoryNavHost(
                 onNavigateToSettings = {
                     navController.navigate(Screen.Settings)
                 },
-                onNavigateToRepo = { id ->
-                    navController.navigate(Screen.Repo(id))
+                onNavigateToRepo = { owner, repo ->
+                    navController.navigate(Screen.Repo(owner, repo))
                 },
             )
         }

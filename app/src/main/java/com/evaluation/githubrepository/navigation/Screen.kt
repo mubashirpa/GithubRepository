@@ -14,6 +14,7 @@ sealed class Screen {
 
     @Serializable
     data class Repo(
-        val id: Int,
+        val owner: String,
+        val repo: String,
     ) : Screen()
 }

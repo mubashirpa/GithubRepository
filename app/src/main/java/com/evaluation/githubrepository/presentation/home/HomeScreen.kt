@@ -34,7 +34,7 @@ fun HomeScreen(
     uiState: HomeUiState,
     onEvent: (HomeUiEvent) -> Unit,
     onNavigateToSettings: () -> Unit,
-    onNavigateToRepo: (Int) -> Unit,
+    onNavigateToRepo: (owner: String, repo: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val scrollBehavior = SearchBarDefaults.enterAlwaysSearchBarScrollBehavior()
@@ -101,7 +101,9 @@ fun HomeScreen(
                             lazyPagingItems[index]?.let { repo ->
                                 RepoListItem(
                                     onClick = {
-                                        repo.id?.let(onNavigateToRepo)
+                                        if (repo.owner != null && repo.name != null) {
+                                            onNavigateToRepo(repo.owner, repo.name)
+                                        }
                                     },
                                     title = repo.name.orEmpty(),
                                     description = repo.description.orEmpty(),
