@@ -24,40 +24,83 @@ class HomeViewModel(
         private set
 
     private var searchJob: Job? = null
+    private var repoJob: Job? = null
 
     init {
-        getRepositories()
-
-        viewModelScope.launch {
-            snapshotFlow { uiState.searchFieldState.text }.collectLatest { queryText ->
-                searchRepositories(queryText.toString(), 500)
-            }
-        }
+        getRepositories(false)
+        collectSearchQuery()
     }
 
     fun onEvent(event: HomeUiEvent) {
         when (event) {
+            HomeUiEvent.Refresh -> {
+                getRepositories(true)
+            }
+
             HomeUiEvent.Retry -> {
-                getRepositories()
+                getRepositories(false)
             }
 
             is HomeUiEvent.Search -> {
                 searchRepositories(event.query.trim(), event.delay)
             }
+
+            HomeUiEvent.UserMessageShown -> {
+                uiState = uiState.copy(userMessage = null)
+            }
         }
     }
 
-    private fun getRepositories() {
-        getRepositoriesUseCase("google")
-            .onEach { result ->
-                uiState = uiState.copy(repositoriesResult = result)
-            }.launchIn(viewModelScope)
+    private fun getRepositories(isRefreshing: Boolean) {
+        // Cancel any ongoing repoJob before making a new call.
+        repoJob?.cancel()
+        repoJob =
+            getRepositoriesUseCase("google")
+                .onEach { result ->
+                    when (result) {
+                        is Result.Empty -> {}
+
+                        is Result.Error -> {
+                            // The Result.Error state is only used during initial loading and retry attempts.
+                            // Otherwise, a snackbar is displayed using the userMessage property.
+                            uiState =
+                                if (isRefreshing) {
+                                    uiState.copy(
+                                        isRefreshing = false,
+                                        userMessage = result.message,
+                                    )
+                                } else {
+                                    uiState.copy(repositoriesResult = result)
+                                }
+                        }
+
+                        is Result.Loading -> {
+                            // The Result.Loading state is only used during initial loading and retry attempts.
+                            // In other cases, the PullRefreshIndicator is shown with isRefreshing = true.
+                            uiState =
+                                if (isRefreshing) {
+                                    uiState.copy(isRefreshing = true)
+                                } else {
+                                    uiState.copy(repositoriesResult = result)
+                                }
+                        }
+
+                        is Result.Success -> {
+                            uiState =
+                                uiState.copy(
+                                    repositoriesResult = result,
+                                    isRefreshing = false,
+                                )
+                        }
+                    }
+                }.launchIn(viewModelScope)
     }
 
     private fun searchRepositories(
         query: String,
         delay: Long = 0,
     ) {
+        // Cancel any ongoing searchJob before making a new call.
         searchJob?.cancel()
         searchJob = null
 
@@ -74,5 +117,14 @@ class HomeViewModel(
                         uiState = uiState.copy(searchRepositoriesResult = result)
                     }.launchIn(this)
             }
+    }
+
+    private fun collectSearchQuery() {
+        viewModelScope.launch {
+            snapshotFlow { uiState.searchFieldState.text }.collectLatest { queryText ->
+                // Start a new search every time the user types something.
+                searchRepositories(queryText.toString(), 500)
+            }
+        }
     }
 }

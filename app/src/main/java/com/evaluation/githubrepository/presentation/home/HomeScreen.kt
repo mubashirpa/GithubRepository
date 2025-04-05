@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBarDefaults
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -70,29 +71,37 @@ fun HomeScreen(
                 val layoutDirection = LocalLayoutDirection.current
                 val contentPadding =
                     PaddingValues(
-                        top = 4.dp + innerPadding.calculateTopPadding(),
+                        top = 4.dp,
                         bottom = 12.dp + innerPadding.calculateBottomPadding(),
                         start = 16.dp + innerPadding.calculateStartPadding(layoutDirection),
                         end = 16.dp + innerPadding.calculateEndPadding(layoutDirection),
                     )
 
-                LazyColumn(
-                    contentPadding = contentPadding,
-                    verticalArrangement = Arrangement.spacedBy(10.dp),
+                PullToRefreshBox(
+                    isRefreshing = uiState.isRefreshing,
+                    onRefresh = {
+                        onEvent(HomeUiEvent.Refresh)
+                    },
+                    modifier = Modifier.padding(top = innerPadding.calculateTopPadding()),
                 ) {
-                    items(
-                        items = repositories,
-                        key = { repo -> repo.id!! },
-                    ) { repo ->
-                        RepoListItem(
-                            onClick = {
-                                repo.id?.let(onNavigateToRepo)
-                            },
-                            title = repo.name.orEmpty(),
-                            description = repo.description.orEmpty(),
-                            starCount = repo.stargazersCount ?: 0,
-                            modifier = Modifier.animateItem(),
-                        )
+                    LazyColumn(
+                        contentPadding = contentPadding,
+                        verticalArrangement = Arrangement.spacedBy(10.dp),
+                    ) {
+                        items(
+                            items = repositories,
+                            key = { repo -> repo.id!! },
+                        ) { repo ->
+                            RepoListItem(
+                                onClick = {
+                                    repo.id?.let(onNavigateToRepo)
+                                },
+                                title = repo.name.orEmpty(),
+                                description = repo.description.orEmpty(),
+                                starCount = repo.stargazersCount ?: 0,
+                                modifier = Modifier.animateItem(),
+                            )
+                        }
                     }
                 }
             }
