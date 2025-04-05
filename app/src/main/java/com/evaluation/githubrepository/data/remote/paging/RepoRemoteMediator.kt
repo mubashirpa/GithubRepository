@@ -6,6 +6,7 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.evaluation.githubrepository.data.local.database.GithubDatabase
+import com.evaluation.githubrepository.data.local.entity.CacheMetadataEntity
 import com.evaluation.githubrepository.data.local.entity.RemoteKeysEntity
 import com.evaluation.githubrepository.data.local.entity.ReposEntity
 import com.evaluation.githubrepository.data.mapper.toRepoEntity
@@ -15,6 +16,7 @@ import com.evaluation.githubrepository.domain.repository.RepoSort
 import com.evaluation.githubrepository.domain.repository.RepoType
 import kotlinx.io.IOException
 import java.lang.Exception
+import java.util.concurrent.TimeUnit
 
 @OptIn(ExperimentalPagingApi::class)
 class RepoRemoteMediator(
@@ -29,6 +31,19 @@ class RepoRemoteMediator(
 ) : RemoteMediator<Int, ReposEntity>() {
     val remoteKeysDao = database.remoteKeysDao()
     val reposDao = database.reposDao()
+    val cacheMetadataDao = database.cacheMetadataDao()
+
+    override suspend fun initialize(): InitializeAction {
+        val cacheTimeout = TimeUnit.MILLISECONDS.convert(1, TimeUnit.HOURS)
+        val lastUpdated = database.lastUpdated()
+        return if (System.currentTimeMillis() - lastUpdated <= cacheTimeout) {
+            // Cached data is fresh (within 1 hour), skip refresh
+            InitializeAction.SKIP_INITIAL_REFRESH
+        } else {
+            // Cached data is stale or missing, trigger refresh
+            InitializeAction.LAUNCH_INITIAL_REFRESH
+        }
+    }
 
     override suspend fun load(
         loadType: LoadType,
@@ -79,6 +94,7 @@ class RepoRemoteMediator(
                 if (loadType == LoadType.REFRESH) {
                     remoteKeysDao.clearRemoteKeys()
                     reposDao.clearAll()
+                    cacheMetadataDao.clear()
                 }
 
                 val prevKey = if (loadKey == page) null else loadKey - 1
@@ -90,6 +106,12 @@ class RepoRemoteMediator(
                     }
                 remoteKeysDao.insertAll(keys)
                 reposDao.insertAll(repositories)
+                cacheMetadataDao.insert(
+                    CacheMetadataEntity(
+                        id = 1,
+                        lastUpdated = System.currentTimeMillis(),
+                    ),
+                )
             }
 
             MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
