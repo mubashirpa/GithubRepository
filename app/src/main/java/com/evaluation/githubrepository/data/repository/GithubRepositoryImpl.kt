@@ -1,8 +1,15 @@
 package com.evaluation.githubrepository.data.repository
 
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.evaluation.githubrepository.core.Constants
+import com.evaluation.githubrepository.data.local.database.GithubDatabase
+import com.evaluation.githubrepository.data.local.entity.ReposEntity
 import com.evaluation.githubrepository.data.remote.dto.github.repos.RepoDto
 import com.evaluation.githubrepository.data.remote.dto.github.search.SearchRepoDto
+import com.evaluation.githubrepository.data.remote.paging.RepoRemoteMediator
 import com.evaluation.githubrepository.domain.repository.GitHubRepository
 import com.evaluation.githubrepository.domain.repository.RepoDirection
 import com.evaluation.githubrepository.domain.repository.RepoSort
@@ -15,9 +22,11 @@ import io.ktor.client.request.get
 import io.ktor.http.HttpHeaders
 import io.ktor.http.appendPathSegments
 import io.ktor.http.headers
+import kotlinx.coroutines.flow.Flow
 
 class GithubRepositoryImpl(
     private val httpClient: HttpClient,
+    private val database: GithubDatabase,
 ) : GitHubRepository {
     override suspend fun getRepositories(
         token: String,
@@ -46,6 +55,34 @@ class GithubRepositoryImpl(
                     append("X-GitHub-Api-Version", "2022-11-28")
                 }
             }.body()
+
+    @OptIn(ExperimentalPagingApi::class)
+    override suspend fun getRepositoriesPaging(
+        token: String,
+        username: String,
+        type: RepoType,
+        sort: RepoSort,
+        direction: RepoDirection,
+        perPage: Int,
+        page: Int,
+    ): Flow<PagingData<ReposEntity>> =
+        Pager(
+            config = PagingConfig(pageSize = perPage),
+            remoteMediator =
+                RepoRemoteMediator(
+                    database = database,
+                    gitHubRepository = this,
+                    token = token,
+                    username = username,
+                    type = type,
+                    sort = sort,
+                    direction = direction,
+                    page = page,
+                ),
+            pagingSourceFactory = {
+                database.reposDao().pagingSource()
+            },
+        ).flow
 
     override suspend fun searchRepositories(
         token: String,

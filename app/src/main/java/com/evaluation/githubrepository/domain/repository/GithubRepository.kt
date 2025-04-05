@@ -1,8 +1,11 @@
 package com.evaluation.githubrepository.domain.repository
 
 import androidx.annotation.IntRange
+import androidx.paging.PagingData
+import com.evaluation.githubrepository.data.local.entity.ReposEntity
 import com.evaluation.githubrepository.data.remote.dto.github.repos.RepoDto
 import com.evaluation.githubrepository.data.remote.dto.github.search.SearchRepoDto
+import kotlinx.coroutines.flow.Flow
 
 interface GitHubRepository {
     suspend fun getRepositories(
@@ -14,6 +17,16 @@ interface GitHubRepository {
         @IntRange(from = 1, to = 100) perPage: Int = 30,
         page: Int = 1,
     ): List<RepoDto>
+
+    suspend fun getRepositoriesPaging(
+        token: String,
+        username: String,
+        type: RepoType = RepoType.OWNER,
+        sort: RepoSort = RepoSort.FULL_NAME,
+        direction: RepoDirection = if (sort == RepoSort.FULL_NAME) RepoDirection.ASC else RepoDirection.DESC,
+        @IntRange(from = 1, to = 100) perPage: Int = 30,
+        page: Int = 1,
+    ): Flow<PagingData<ReposEntity>>
 
     suspend fun searchRepositories(
         token: String,

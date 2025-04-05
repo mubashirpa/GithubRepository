@@ -1,9 +1,12 @@
 package com.evaluation.githubrepository.di
 
+import androidx.room.Room
+import com.evaluation.githubrepository.data.local.database.GithubDatabase
 import com.evaluation.githubrepository.data.repository.AuthenticationRepositoryImpl
 import com.evaluation.githubrepository.data.repository.GithubRepositoryImpl
 import com.evaluation.githubrepository.domain.repository.AuthenticationRepository
 import com.evaluation.githubrepository.domain.repository.GitHubRepository
+import com.evaluation.githubrepository.domain.usecase.GetRepositoriesPagingUseCase
 import com.evaluation.githubrepository.domain.usecase.GetRepositoriesUseCase
 import com.evaluation.githubrepository.domain.usecase.IsUserLoggedInUseCase
 import com.evaluation.githubrepository.domain.usecase.LoginWithGoogleUseCase
@@ -19,6 +22,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
@@ -32,6 +36,7 @@ val appModule =
         single { LoginWithGoogleUseCase(get()) }
         single { GetRepositoriesUseCase(get()) }
         single { SearchRepositoriesUseCase(get()) }
+        single { GetRepositoriesPagingUseCase(get()) }
         singleOf(::IsUserLoggedInUseCase)
         singleOf(::SignOutUseCase)
         viewModelOf(::LoginViewModel)
@@ -51,5 +56,8 @@ val appModule =
                     )
                 }
             }
+        }
+        single {
+            Room.databaseBuilder(androidContext(), GithubDatabase::class.java, "github_db").build()
         }
     }
