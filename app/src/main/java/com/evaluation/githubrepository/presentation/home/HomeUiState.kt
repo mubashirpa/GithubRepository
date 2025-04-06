@@ -10,6 +10,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 data class HomeUiState(
     val isRefreshing: Boolean = false,
+    val notificationPermissionRequested: Boolean = false,
+    val openNotificationPermissionDialog: Boolean = false,
     val repositories: MutableStateFlow<PagingData<Repo>> = MutableStateFlow(PagingData.empty()),
     val searchRepositoriesResult: Result<List<SearchRepo>> = Result.Empty(),
     val searchFieldState: TextFieldState = TextFieldState(),

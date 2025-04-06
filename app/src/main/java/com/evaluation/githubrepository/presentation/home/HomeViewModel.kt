@@ -34,6 +34,14 @@ class HomeViewModel(
 
     fun onEvent(event: HomeUiEvent) {
         when (event) {
+            is HomeUiEvent.OnNotificationPermissionRequestedChange -> {
+                uiState = uiState.copy(notificationPermissionRequested = event.requested)
+            }
+
+            is HomeUiEvent.OnOpenNotificationPermissionDialogChange -> {
+                uiState = uiState.copy(openNotificationPermissionDialog = event.open)
+            }
+
             is HomeUiEvent.Search -> {
                 searchRepositories(event.query.trim(), event.delay)
             }
