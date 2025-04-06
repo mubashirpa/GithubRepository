@@ -13,6 +13,7 @@ import com.evaluation.githubrepository.domain.usecase.IsUserLoggedInUseCase
 import com.evaluation.githubrepository.domain.usecase.LoginWithGoogleUseCase
 import com.evaluation.githubrepository.domain.usecase.SearchRepositoriesUseCase
 import com.evaluation.githubrepository.domain.usecase.SignOutUseCase
+import com.evaluation.githubrepository.presentation.core.NotificationBuilder
 import com.evaluation.githubrepository.presentation.home.HomeViewModel
 import com.evaluation.githubrepository.presentation.login.LoginViewModel
 import com.evaluation.githubrepository.presentation.main.MainViewModel
@@ -64,4 +65,5 @@ val appModule =
         single {
             Room.databaseBuilder(androidContext(), GithubDatabase::class.java, "github_db").build()
         }
+        singleOf(::NotificationBuilder)
     }
