@@ -1,6 +1,8 @@
 package com.evaluation.githubrepository.presentation.home.components
 
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imeNestedScroll
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.input.clearText
@@ -23,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import com.evaluation.githubrepository.R
 import com.evaluation.githubrepository.core.Result
@@ -32,7 +35,7 @@ import com.evaluation.githubrepository.presentation.home.HomeUiEvent
 import com.evaluation.githubrepository.presentation.home.HomeUiState
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun HomeSearchBar(
     scrollBehavior: SearchBarScrollBehavior,
@@ -43,7 +46,7 @@ fun HomeSearchBar(
 ) {
     val searchBarState = rememberSearchBarState()
     val scope = rememberCoroutineScope()
-    val keyboardController = LocalSoftwareKeyboardController.current
+    var keyboardController: SoftwareKeyboardController? = null
 
     val inputField =
         @Composable {
@@ -116,6 +119,8 @@ fun HomeSearchBar(
         state = searchBarState,
         inputField = inputField,
     ) {
+        keyboardController = LocalSoftwareKeyboardController.current
+
         when (val searchRepositoriesResult = uiState.searchRepositoriesResult) {
             is Result.Empty -> {}
 
@@ -135,7 +140,7 @@ fun HomeSearchBar(
 
             is Result.Success -> {
                 val repositories = searchRepositoriesResult.data!!
-                LazyColumn(modifier = Modifier.fillMaxSize()) {
+                LazyColumn(modifier = Modifier.fillMaxSize().imeNestedScroll()) {
                     items(
                         items = repositories,
                         key = { it.id!! },
