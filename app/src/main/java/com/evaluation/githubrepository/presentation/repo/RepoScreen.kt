@@ -81,36 +81,36 @@ fun RepoScreen(
             )
         },
     ) { innerPadding ->
-        Column(
-            modifier =
-                Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
-                    .padding(innerPadding)
-                    .padding(horizontal = 16.dp, vertical = 12.dp),
-        ) {
-            when (val repoResult = uiState.repoResult) {
-                is Result.Empty -> {}
+        when (val repoResult = uiState.repoResult) {
+            is Result.Empty -> {}
 
-                is Result.Error -> {
-                    ErrorScreen(
-                        onRetryClick = { /*TODO*/ },
-                        modifier = Modifier.fillMaxSize(),
-                        errorMessage = repoResult.message!!.asString(),
-                    )
-                }
+            is Result.Error -> {
+                ErrorScreen(
+                    onRetryClick = { /*TODO*/ },
+                    modifier = Modifier.fillMaxSize(),
+                    errorMessage = repoResult.message!!.asString(),
+                )
+            }
 
-                is Result.Loading -> {
-                    LoadingScreen()
-                }
+            is Result.Loading -> {
+                LoadingScreen()
+            }
 
-                is Result.Success -> {
-                    val repo = repoResult.data!!
-                    val description =
-                        repo.description ?: stringResource(R.string.no_description_provided)
-                    val language = repo.language ?: stringResource(R.string.unknown)
-                    val starCount = repo.stargazersCount ?: 0
+            is Result.Success -> {
+                val repo = repoResult.data!!
+                val description =
+                    repo.description ?: stringResource(R.string.no_description_provided)
+                val language = repo.language ?: stringResource(R.string.unknown)
+                val starCount = repo.stargazersCount ?: 0
 
+                Column(
+                    modifier =
+                        Modifier
+                            .fillMaxSize()
+                            .verticalScroll(rememberScrollState())
+                            .padding(innerPadding)
+                            .padding(horizontal = 16.dp, vertical = 12.dp),
+                ) {
                     Text(
                         text = stringResource(R.string.description),
                         color = MaterialTheme.colorScheme.onSurface,
@@ -170,7 +170,9 @@ private fun RepoScreenPreview(
             uiState =
                 RepoUiState(
                     repoResult =
-                        Result.Success(RepoDetails(description = description)),
+                        Result.Success(
+                            RepoDetails(description = description),
+                        ),
                 ),
             title = "kotlin",
             subtitle = "JetBrains",
