@@ -14,12 +14,6 @@ interface ReposDao {
     @Query("SELECT * FROM repositories ORDER BY name ASC")
     fun pagingSource(): PagingSource<Int, ReposEntity>
 
-    @Query("SELECT * FROM repositories WHERE owner = :owner AND name = :repo")
-    suspend fun getRepo(
-        owner: String,
-        repo: String,
-    ): ReposEntity?
-
     @Query("DELETE FROM repositories")
     suspend fun clearAll()
 }
