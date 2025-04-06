@@ -12,6 +12,11 @@
     <string name="no_description_provided">No description provided</string>
     <string name="unknown">Unknown</string>
 
+    <!-- Notification -->
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="default_notification_channel_name">Repository</string>
+    <string name="default_notification_channel_description">Repository notifications</string>
+
     <!-- Screen titles -->
     <string name="title_settings_screen">Settings</string>
 
