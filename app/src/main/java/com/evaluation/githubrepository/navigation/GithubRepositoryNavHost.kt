@@ -66,6 +66,7 @@ fun GithubRepositoryNavHost(
 
             RepoScreen(
                 uiState = viewModel.uiState,
+                onEvent = viewModel::onEvent,
                 title = repo.repo,
                 subtitle = repo.owner,
                 onNavigateUp = navController::navigateUp,

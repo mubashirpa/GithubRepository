@@ -25,6 +25,14 @@ class RepoViewModel(
         getRepository(repo.owner, repo.repo)
     }
 
+    fun onEvent(event: RepoUiEvent) {
+        when (event) {
+            RepoUiEvent.Retry -> {
+                getRepository(repo.owner, repo.repo)
+            }
+        }
+    }
+
     private fun getRepository(
         owner: String,
         repo: String,

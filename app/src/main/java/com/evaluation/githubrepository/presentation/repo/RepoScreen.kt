@@ -45,6 +45,7 @@ import com.evaluation.githubrepository.presentation.theme.GithubRepositoryTheme
 @Composable
 fun RepoScreen(
     uiState: RepoUiState,
+    onEvent: (RepoUiEvent) -> Unit,
     title: String,
     subtitle: String,
     onNavigateUp: () -> Unit,
@@ -86,14 +87,19 @@ fun RepoScreen(
 
             is Result.Error -> {
                 ErrorScreen(
-                    onRetryClick = { /*TODO*/ },
-                    modifier = Modifier.fillMaxSize(),
+                    onRetryClick = {
+                        onEvent(RepoUiEvent.Retry)
+                    },
+                    modifier =
+                        Modifier
+                            .fillMaxSize()
+                            .padding(innerPadding),
                     errorMessage = repoResult.message!!.asString(),
                 )
             }
 
             is Result.Loading -> {
-                LoadingScreen()
+                LoadingScreen(modifier = Modifier.padding(innerPadding))
             }
 
             is Result.Success -> {
@@ -174,6 +180,7 @@ private fun RepoScreenPreview(
                             RepoDetails(description = description),
                         ),
                 ),
+            onEvent = {},
             title = "kotlin",
             subtitle = "JetBrains",
             onNavigateUp = {},
