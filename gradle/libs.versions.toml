@@ -21,6 +21,7 @@ ktor = "3.1.2"
 ksp = "2.1.20-1.0.32"
 room = "2.6.1"
 paging = "3.3.6"
+accompanist = "0.37.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -45,6 +46,7 @@ androidx-credentials-play-services-auth = { group = "androidx.credentials", name
 googleid = { group = "com.google.android.libraries.identity.googleid", name = "googleid", version.ref = "googleid" }
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth" }
+firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging" }
 koin-bom = { group = "io.insert-koin", name = "koin-bom", version.ref = "koinBom" }
 koin-androidx-compose = { group = "io.insert-koin", name = "koin-androidx-compose" }
 koin-androidx-compose-navigation = { group = "io.insert-koin", name = "koin-androidx-compose-navigation" }
@@ -58,6 +60,7 @@ room-paging = { group = "androidx.room", name = "room-paging", version.ref = "ro
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging" }
 paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging" }
+accompanist-permissions = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "accompanist" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -73,6 +76,10 @@ credentials = [
     "androidx-credentials",
     "androidx-credentials-play-services-auth",
     "googleid",
+]
+firebase = [
+    "firebase-auth",
+    "firebase-messaging",
 ]
 koin = [
     "koin-androidx-compose",

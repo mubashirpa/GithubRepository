@@ -69,7 +69,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.bundles.credentials)
     implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.auth)
+    implementation(libs.bundles.firebase)
     implementation(platform(libs.koin.bom))
     implementation(libs.bundles.koin)
     implementation(libs.androidx.core.splashscreen)
@@ -77,4 +77,5 @@ dependencies {
     implementation(libs.bundles.room)
     ksp(libs.room.compiler)
     implementation(libs.bundles.paging)
+    implementation(libs.accompanist.permissions)
 }
