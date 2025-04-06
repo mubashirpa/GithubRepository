@@ -6,6 +6,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.evaluation.githubrepository.core.Constants
 import com.evaluation.githubrepository.data.local.database.GithubDatabase
+import com.evaluation.githubrepository.data.local.entity.RepoDetailsEntity
 import com.evaluation.githubrepository.data.local.entity.ReposEntity
 import com.evaluation.githubrepository.data.remote.dto.github.repo.RepoDetailsDto
 import com.evaluation.githubrepository.data.remote.dto.github.repos.RepoDto
@@ -115,7 +116,9 @@ class GithubRepositoryImpl(
     override suspend fun getRepository(
         owner: String,
         repo: String,
-    ): ReposEntity? = database.reposDao().getRepo(owner, repo)
+    ): RepoDetailsEntity? = database.repoDetailsDao().getRepo(owner, repo)
+
+    override suspend fun insertRepository(repo: RepoDetailsEntity) = database.repoDetailsDao().insertRepo(repo)
 
     override suspend fun getRepository(
         token: String,

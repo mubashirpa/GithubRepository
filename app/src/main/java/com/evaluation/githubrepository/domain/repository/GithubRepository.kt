@@ -2,6 +2,7 @@ package com.evaluation.githubrepository.domain.repository
 
 import androidx.annotation.IntRange
 import androidx.paging.PagingData
+import com.evaluation.githubrepository.data.local.entity.RepoDetailsEntity
 import com.evaluation.githubrepository.data.local.entity.ReposEntity
 import com.evaluation.githubrepository.data.remote.dto.github.repo.RepoDetailsDto
 import com.evaluation.githubrepository.data.remote.dto.github.repos.RepoDto
@@ -41,7 +42,9 @@ interface GitHubRepository {
     suspend fun getRepository(
         owner: String,
         repo: String,
-    ): ReposEntity?
+    ): RepoDetailsEntity?
+
+    suspend fun insertRepository(repo: RepoDetailsEntity)
 
     suspend fun getRepository(
         token: String,
