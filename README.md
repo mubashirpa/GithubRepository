@@ -88,6 +88,72 @@ https://api.github.com/search/repositories
 
 Refer to [GitHub API Docs](https://docs.github.com/en/rest) for more.
 
+## FAQ
+
+**Q: Explain the functionality**
+
+The application allows users to browse public repositories from the JetBrains GitHub account using
+the GitHub REST API. The user can log in using Google Sign-In, view a list of JetBrains
+repositories, and search for specific repositories by name from the remote API. The app also caches
+the repository data locally using Room to support offline access. Additionally, Firebase Cloud
+Messaging is integrated to handle push notifications for user engagement.
+
+**Q: What Components are used in the project?**
+
+- **Jetpack Compose** for building a modern declarative UI
+- **Ktor Client** for making HTTP requests to the GitHub API
+- **Room Database** for local data caching
+- **Paging 3** for efficient and seamless pagination of repository lists
+- **Koin** for dependency injection and managing app modules
+- **ViewModel + Kotlin Flow + Coroutines** for state management and asynchronous operations
+- **Firebase Auth** for Google Sign-In
+- **Firebase Cloud Messaging (FCM)** for push notifications
+
+**Q: What architecture did you use and why do you think it’s best suitable?**
+
+I implemented Clean Architecture combined with MVVM, which helps in creating a scalable, testable,
+and modular application:
+
+- **The Presentation Layer** uses Jetpack Compose with ViewModels to manage UI state and user
+  interactions.
+- **The Domain Layer** contains business logic and use cases, isolated from frameworks.
+- **The Data Layer** abstracts the data sources (GitHub API via Ktor and Room DB).
+
+This architecture clearly separates concerns, makes the codebase easier to maintain and test, and
+ensures that the app is adaptable for future feature extensions, like switching data sources.
+
+**Q: How do you ensure that code is testable?**
+
+- Business logic is centralized in the Domain Layer with use cases and interfaces, which can be
+  easily unit tested.
+- Dependencies are injected using Koin, which supports easy replacement with mock/fake
+  implementations during testing.
+- ViewModels are tested for state updates using Kotlin Flow and Coroutines.
+- UI logic is kept separate from Composables, which allows them to be previewed and tested in
+  isolation.
+- API and DB access are abstracted, allowing me to write tests for the Repository layer using fake
+  data sources.
+
+**Q: Is there any way that you can automate the deployment?**
+
+Since this project is hosted on GitHub, I can easily use GitHub Actions to define workflows in .yml
+files that trigger on push, pull request, or tags. This helps automate testing and release processes
+efficiently.
+
+I’ve already implemented a basic CI workflow using GitHub Actions.
+It automatically runs on every push or pull request to the master branch.
+The workflow:
+
+- Sets up the build environment with JDK 17
+- Decodes the keystore and creates the keystore.properties file for signing
+- Decodes the google-services.json from secrets to enable Firebase
+- Builds the project using Gradle
+
+This setup ensures every commit is verified and builds correctly, reducing errors in later stages.
+
+It can also be extended to run tests, distribute builds via Firebase App Distribution, or even
+publish to the Play Store in future phases.
+
 ## Contact
 
 For any questions, feel free to reach out
