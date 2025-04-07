@@ -136,23 +136,26 @@ ensures that the app is adaptable for future feature extensions, like switching 
 
 **Q: Is there any way that you can automate the deployment?**
 
-Since this project is hosted on GitHub, I can easily use GitHub Actions to define workflows in .yml
-files that trigger on push, pull request, or tags. This helps automate testing and release processes
-efficiently.
+Yes, since this project is hosted on GitHub, I’ve automated the deployment process using GitHub
+Actions.
 
-I’ve already implemented a basic CI workflow using GitHub Actions.
-It automatically runs on every push or pull request to the master branch.
-The workflow:
+A CI workflow is already set up to run on every push or pull request to the master branch. This
+workflow:
 
 - Sets up the build environment with JDK 17
 - Decodes the keystore and creates the keystore.properties file for signing
 - Decodes the google-services.json from secrets to enable Firebase
 - Builds the project using Gradle
+- Distributes the release build via Firebase App Distribution to testers automatically
 
-This setup ensures every commit is verified and builds correctly, reducing errors in later stages.
+This ensures each commit is built, signed, and distributed consistently, helping reduce manual steps
+and potential errors.
 
-It can also be extended to run tests, distribute builds via Firebase App Distribution, or even
-publish to the Play Store in future phases.
+The workflow can also be extended in the future to:
+
+- Run unit and UI tests
+- Upload builds to Google Play Console
+- Trigger builds based on tags or version bumps
 
 ## Contact
 
