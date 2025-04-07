@@ -9,7 +9,7 @@ import com.evaluation.githubrepository.data.remote.dto.github.repos.RepoDto
 import com.evaluation.githubrepository.data.remote.dto.github.search.SearchRepoDto
 import kotlinx.coroutines.flow.Flow
 
-interface GitHubRepository {
+interface GithubRepository {
     suspend fun getRepositories(
         token: String,
         username: String,

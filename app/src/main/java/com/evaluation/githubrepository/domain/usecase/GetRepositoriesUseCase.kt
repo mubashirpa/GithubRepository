@@ -6,7 +6,7 @@ import com.evaluation.githubrepository.core.Result
 import com.evaluation.githubrepository.core.UiText
 import com.evaluation.githubrepository.data.mapper.toRepo
 import com.evaluation.githubrepository.domain.model.github.repos.Repo
-import com.evaluation.githubrepository.domain.repository.GitHubRepository
+import com.evaluation.githubrepository.domain.repository.GithubRepository
 import com.evaluation.githubrepository.domain.repository.RepoDirection
 import com.evaluation.githubrepository.domain.repository.RepoSort
 import com.evaluation.githubrepository.domain.repository.RepoType
@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.flowOn
 import java.net.ConnectException
 
 class GetRepositoriesUseCase(
-    private val repository: GitHubRepository,
+    private val repository: GithubRepository,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) {
     operator fun invoke(

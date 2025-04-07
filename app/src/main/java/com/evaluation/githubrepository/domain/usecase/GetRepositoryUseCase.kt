@@ -6,7 +6,7 @@ import com.evaluation.githubrepository.core.UiText
 import com.evaluation.githubrepository.data.mapper.toRepoDetails
 import com.evaluation.githubrepository.data.mapper.toRepoDetailsEntity
 import com.evaluation.githubrepository.domain.model.github.repo.RepoDetails
-import com.evaluation.githubrepository.domain.repository.GitHubRepository
+import com.evaluation.githubrepository.domain.repository.GithubRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -18,7 +18,7 @@ import java.net.ConnectException
 import java.util.concurrent.TimeUnit
 
 class GetRepositoryUseCase(
-    private val repository: GitHubRepository,
+    private val repository: GithubRepository,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) {
     operator fun invoke(

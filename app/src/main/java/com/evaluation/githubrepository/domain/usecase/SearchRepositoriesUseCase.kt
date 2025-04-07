@@ -6,7 +6,7 @@ import com.evaluation.githubrepository.core.Result
 import com.evaluation.githubrepository.core.UiText
 import com.evaluation.githubrepository.data.mapper.toSearchRepo
 import com.evaluation.githubrepository.domain.model.github.search.SearchRepo
-import com.evaluation.githubrepository.domain.repository.GitHubRepository
+import com.evaluation.githubrepository.domain.repository.GithubRepository
 import com.evaluation.githubrepository.domain.repository.SearchOrder
 import com.evaluation.githubrepository.domain.repository.SearchSort
 import kotlinx.coroutines.CoroutineDispatcher
@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.flowOn
 import java.net.ConnectException
 
 class SearchRepositoriesUseCase(
-    private val repository: GitHubRepository,
+    private val repository: GithubRepository,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) {
     operator fun invoke(

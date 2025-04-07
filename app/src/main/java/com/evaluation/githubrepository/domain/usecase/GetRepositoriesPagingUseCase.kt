@@ -5,7 +5,7 @@ import androidx.paging.PagingData
 import androidx.paging.map
 import com.evaluation.githubrepository.data.mapper.toRepo
 import com.evaluation.githubrepository.domain.model.github.repos.Repo
-import com.evaluation.githubrepository.domain.repository.GitHubRepository
+import com.evaluation.githubrepository.domain.repository.GithubRepository
 import com.evaluation.githubrepository.domain.repository.RepoDirection
 import com.evaluation.githubrepository.domain.repository.RepoSort
 import com.evaluation.githubrepository.domain.repository.RepoType
@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
 class GetRepositoriesPagingUseCase(
-    private val repository: GitHubRepository,
+    private val repository: GithubRepository,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) {
     suspend operator fun invoke(

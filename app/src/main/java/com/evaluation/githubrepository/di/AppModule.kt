@@ -5,7 +5,7 @@ import com.evaluation.githubrepository.data.local.database.GithubDatabase
 import com.evaluation.githubrepository.data.repository.AuthenticationRepositoryImpl
 import com.evaluation.githubrepository.data.repository.GithubRepositoryImpl
 import com.evaluation.githubrepository.domain.repository.AuthenticationRepository
-import com.evaluation.githubrepository.domain.repository.GitHubRepository
+import com.evaluation.githubrepository.domain.repository.GithubRepository
 import com.evaluation.githubrepository.domain.usecase.GetRepositoriesPagingUseCase
 import com.evaluation.githubrepository.domain.usecase.GetRepositoriesUseCase
 import com.evaluation.githubrepository.domain.usecase.GetRepositoryUseCase
@@ -35,7 +35,7 @@ val appModule =
     module {
         single { Firebase.auth }
         singleOf(::AuthenticationRepositoryImpl) { bind<AuthenticationRepository>() }
-        singleOf(::GithubRepositoryImpl) { bind<GitHubRepository>() }
+        singleOf(::GithubRepositoryImpl) { bind<GithubRepository>() }
         single { LoginWithGoogleUseCase(get()) }
         single { GetRepositoriesUseCase(get()) }
         single { SearchRepositoriesUseCase(get()) }

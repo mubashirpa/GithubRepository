@@ -10,7 +10,7 @@ import com.evaluation.githubrepository.data.local.entity.CacheMetadataEntity
 import com.evaluation.githubrepository.data.local.entity.RemoteKeysEntity
 import com.evaluation.githubrepository.data.local.entity.ReposEntity
 import com.evaluation.githubrepository.data.mapper.toRepoEntity
-import com.evaluation.githubrepository.domain.repository.GitHubRepository
+import com.evaluation.githubrepository.domain.repository.GithubRepository
 import com.evaluation.githubrepository.domain.repository.RepoDirection
 import com.evaluation.githubrepository.domain.repository.RepoSort
 import com.evaluation.githubrepository.domain.repository.RepoType
@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit
 @OptIn(ExperimentalPagingApi::class)
 class RepoRemoteMediator(
     private val database: GithubDatabase,
-    private val gitHubRepository: GitHubRepository,
+    private val gitHubRepository: GithubRepository,
     private val token: String,
     private val username: String,
     private val type: RepoType = RepoType.OWNER,

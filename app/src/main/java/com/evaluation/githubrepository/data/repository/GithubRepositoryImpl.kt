@@ -12,7 +12,7 @@ import com.evaluation.githubrepository.data.remote.dto.github.repo.RepoDetailsDt
 import com.evaluation.githubrepository.data.remote.dto.github.repos.RepoDto
 import com.evaluation.githubrepository.data.remote.dto.github.search.SearchRepoDto
 import com.evaluation.githubrepository.data.remote.paging.RepoRemoteMediator
-import com.evaluation.githubrepository.domain.repository.GitHubRepository
+import com.evaluation.githubrepository.domain.repository.GithubRepository
 import com.evaluation.githubrepository.domain.repository.RepoDirection
 import com.evaluation.githubrepository.domain.repository.RepoSort
 import com.evaluation.githubrepository.domain.repository.RepoType
@@ -29,7 +29,7 @@ import kotlinx.coroutines.flow.Flow
 class GithubRepositoryImpl(
     private val httpClient: HttpClient,
     private val database: GithubDatabase,
-) : GitHubRepository {
+) : GithubRepository {
     override suspend fun getRepositories(
         token: String,
         username: String,
