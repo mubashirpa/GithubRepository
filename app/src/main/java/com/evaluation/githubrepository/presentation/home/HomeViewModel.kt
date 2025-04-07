@@ -7,6 +7,7 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
+import com.evaluation.githubrepository.core.Constants
 import com.evaluation.githubrepository.core.Result
 import com.evaluation.githubrepository.domain.usecase.GetRepositoriesPagingUseCase
 import com.evaluation.githubrepository.domain.usecase.SearchRepositoriesUseCase
@@ -28,7 +29,7 @@ class HomeViewModel(
     private var searchJob: Job? = null
 
     init {
-        getRepositories()
+        getRepositories(Constants.GITHUB_USER_NAME)
         collectSearchQuery()
     }
 
@@ -52,9 +53,9 @@ class HomeViewModel(
         }
     }
 
-    private fun getRepositories() {
+    private fun getRepositories(user: String) {
         viewModelScope.launch {
-            getRepositoriesPagingUseCase("mubashirpa")
+            getRepositoriesPagingUseCase(user)
                 .distinctUntilChanged()
                 .cachedIn(viewModelScope)
                 .collect {
