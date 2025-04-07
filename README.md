@@ -42,7 +42,7 @@ and features Google Sign-In along with Firebase Cloud Messaging for push notific
 - **Koin** for dependency injection
 - **Firebase** for authentication and messaging
 - **Material Design Components** for a clean and responsive UI
-- **Paging3** for pagination
+- **Paging3** for efficient data pagination
 
 ## Installation & Setup
 
@@ -51,25 +51,31 @@ and features Google Sign-In along with Firebase Cloud Messaging for push notific
    git clone https://github.com/yourusername/GitHubExplorer.git
    cd GitHubExplorer
    ```
-
 2. **Add API Token (Optional but recommended to avoid rate limits)**
-
-- Add the following to `local.properties`:
-  ```properties
-  GITHUB_TOKEN=your_github_token_here
-  ```
-
-3. **Configure Firebase**
-
-- Create a Firebase project.
-- Enable Google Sign-In and Firebase Cloud Messaging.
-- Download `google-services.json` and place it in the `app/` directory.
-
-4. **Open the project in Android Studio**
-
-5. **Sync Gradle and build the project**
-
-6. **Run the app on an emulator or physical device**
+    - Add the following to `local.properties`:
+      ```properties
+      GITHUB_TOKEN=your_github_token_here
+      ```
+3. **Create a Keystore for Signing**
+    - Navigate to the `app` directory and create a keystore file (`your-keystore.jks`).
+    - This file is required for signing the application.
+4. **Set up the Keystore Properties**
+    - Create a `keystore.properties` file in the project's root directory and add the following
+      values:
+      ```properties
+      storePassword=your-store-password
+      keyPassword=your-key-password
+      keyAlias=your-key-alias
+      storeFile=your-keystore.jks
+      ```
+    - Ensure that the file is referenced correctly in `build.gradle` to fetch the keystore details.
+5. **Configure Firebase**
+    - Create a Firebase project.
+    - Enable Google Sign-In and Firebase Cloud Messaging.
+    - Download `google-services.json` and place it in the `app/` directory.
+6. **Open the project in Android Studio**
+7. **Sync Gradle and build the project**
+8. **Run the app on an emulator or physical device**
 
 ## API Reference
 
