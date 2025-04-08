@@ -14,7 +14,7 @@ import com.evaluation.githubrepository.domain.repository.GithubRepository
 import com.evaluation.githubrepository.domain.repository.RepoDirection
 import com.evaluation.githubrepository.domain.repository.RepoSort
 import com.evaluation.githubrepository.domain.repository.RepoType
-import kotlinx.io.IOException
+import java.io.IOException
 import java.lang.Exception
 import java.util.concurrent.TimeUnit
 
@@ -50,6 +50,7 @@ class RepoRemoteMediator(
         state: PagingState<Int, ReposEntity>,
     ): MediatorResult {
         return try {
+            val perPage = state.config.pageSize
             val loadKey =
                 when (loadType) {
                     LoadType.REFRESH -> {
@@ -83,11 +84,16 @@ class RepoRemoteMediator(
                     type = type,
                     sort = sort,
                     direction = direction,
-                    perPage = state.config.pageSize,
+                    perPage = perPage,
                     page = loadKey,
                 )
-            val repositories = response.map { it.toRepoEntity() }
-            val endOfPaginationReached = repositories.size < state.config.pageSize
+            val repositories =
+                response.mapIndexed { index, repo ->
+                    repo.toRepoEntity(
+                        displayOrder = (loadKey - 1) * perPage + index + 1,
+                    )
+                }
+            val endOfPaginationReached = repositories.size < perPage
 
             database.withTransaction {
                 // clear all tables in the database
