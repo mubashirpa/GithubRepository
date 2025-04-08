@@ -11,7 +11,7 @@ interface ReposDao {
     @Upsert
     suspend fun insertAll(repos: List<ReposEntity>)
 
-    @Query("SELECT * FROM repositories ORDER BY name ASC")
+    @Query("SELECT * FROM repositories ORDER BY displayOrder ASC")
     fun pagingSource(): PagingSource<Int, ReposEntity>
 
     @Query("DELETE FROM repositories")

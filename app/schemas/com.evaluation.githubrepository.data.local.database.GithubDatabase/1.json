@@ -2,15 +2,21 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "1fe3b203d5f2035dd2b2ebd20e7ae929",
+    "identityHash": "14fd0b7f5699e5754d9b61cf19d439da",
     "entities": [
       {
         "tableName": "repositories",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `description` TEXT, `language` TEXT, `name` TEXT, `owner` TEXT, `stargazersCount` INTEGER, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `displayOrder` INTEGER NOT NULL, `description` TEXT, `language` TEXT, `name` TEXT, `owner` TEXT, `stargazersCount` INTEGER, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "displayOrder",
+            "columnName": "displayOrder",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -172,7 +178,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1fe3b203d5f2035dd2b2ebd20e7ae929')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '14fd0b7f5699e5754d9b61cf19d439da')"
     ]
   }
 }

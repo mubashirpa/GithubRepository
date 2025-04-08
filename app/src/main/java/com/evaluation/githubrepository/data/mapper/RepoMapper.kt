@@ -21,9 +21,10 @@ fun RepoDto.toRepo(): Repo =
         stargazersCount = stargazersCount,
     )
 
-fun RepoDto.toRepoEntity(): ReposEntity =
+fun RepoDto.toRepoEntity(displayOrder: Int): ReposEntity =
     ReposEntity(
         id = id!!,
+        displayOrder = displayOrder,
         description = description,
         language = language,
         name = name,
